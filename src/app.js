@@ -20,4 +20,15 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+//routes import
+
+import messageRouter from "./routes/message.routes.js";
+
+import userRouter from "./routes/user.routes.js";
+
+//router declartion
+app.use("/api/v1/message", messageRouter);
+
+app.use("/api/v1/user", userRouter);
 export default app;
