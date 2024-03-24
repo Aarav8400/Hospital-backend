@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addNewAdmin,
+  addNewDoctor,
   getAllDoctors,
   getCurrentUser,
   login,
@@ -12,6 +13,7 @@ import {
   isAdminAuthenticated,
   isPatientAuthenticated,
 } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
@@ -23,5 +25,12 @@ router.route("/admin/me").get(isAdminAuthenticated, getCurrentUser);
 router.route("/patient/me").get(isPatientAuthenticated, getCurrentUser);
 router.route("/admin/logout").get(isAdminAuthenticated, logoutAdmin);
 router.route("/patient/logout").get(isPatientAuthenticated, logoutPatient);
+router
+  .route("/doctor/addnew")
+  .post(
+    isAdminAuthenticated,
+    upload.fields([{ name: "docAvatar", maxCount: 1 }]),
+    addNewDoctor
+  );
 
 export default router;

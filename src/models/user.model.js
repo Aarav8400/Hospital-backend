@@ -50,8 +50,7 @@ const userSchema = new Schema(
       type: String,
     },
     docAvatar: {
-      public_id: String,
-      url: String,
+      type: String,
     },
   },
   { timestamps: true }

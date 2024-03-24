@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import { generateJwtToken } from "../utils/jwtToken.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const patientRegister = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, phone, password, gender, dob, role } =
@@ -152,6 +153,72 @@ const logoutPatient = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Patient logged out SuccessFully"));
 });
 
+const addNewDoctor = asyncHandler(async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    throw new ApiError(400, "Doctor avatar required");
+  }
+  const docAvatarLocalpath = req.files?.docAvatar[0]?.path;
+  // console.log(docAvatar);
+  // const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+  // if (!allowedFormats.includes(docAvatar.mimetype)) {
+  //   throw new ApiError(400, "file format not supported");
+  // }
+  console.log(docAvatarLocalpath);
+  if (!docAvatarLocalpath) {
+    throw new ApiError(400, "docAvatar file is required");
+  }
+
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    dob,
+    doctorDepartment,
+  } = req.body;
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phone ||
+    !password ||
+    !gender ||
+    !dob ||
+    !doctorDepartment
+  ) {
+    throw new ApiError(400, "please provide full details");
+  }
+  const isRegistered = await User.findOne({ email });
+  if (isRegistered) {
+    throw new ApiError(400, "User with this email already exist");
+  }
+  const avatar = await uploadOnCloudinary(docAvatarLocalpath);
+  if (!avatar) {
+    throw new ApiError(400, "error while uploading on cloudinary");
+  }
+  const doctor = await User.create({
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    dob,
+    doctorDepartment,
+    role: "Doctor",
+    docAvatar: avatar.url,
+  });
+  const createdUser = await User.findById(doctor._id).select("-password");
+  if (!createdUser) {
+    throw new ApiError(409, "Something went wrong while adding the new doctor");
+  }
+  return res
+    .status(201)
+    .json(new ApiResponse(200, createdUser, "Doctor added Successfully"));
+});
+
 export {
   patientRegister,
   login,
@@ -160,4 +227,5 @@ export {
   getCurrentUser,
   logoutAdmin,
   logoutPatient,
+  addNewDoctor,
 };
