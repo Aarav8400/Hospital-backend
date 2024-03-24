@@ -12,4 +12,12 @@ const sendMessage = asyncHandler(async (req, res) => {
     message: "Message sent succesfully",
   });
 });
-export { sendMessage };
+
+const getAllMessages = asyncHandler(async (req, res) => {
+  const message = await Message.find();
+  res.status(200).json({
+    succees: true,
+    message,
+  });
+});
+export { sendMessage, getAllMessages };
