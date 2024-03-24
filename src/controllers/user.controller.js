@@ -116,4 +116,48 @@ const addNewAdmin = asyncHandler(async (req, res) => {
     );
 });
 
-export { patientRegister, login, addNewAdmin };
+const getAllDoctors = asyncHandler(async (req, res) => {
+  const doctors = await User.find({ role: "Doctor" });
+  return res
+    .status(201)
+    .json(new ApiResponse(200, doctors, "All doctors fetched successfully"));
+});
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "user fetched successfully"));
+});
+
+const logoutAdmin = asyncHandler(async (req, res) => {
+  const options = {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now()),
+  };
+  return res
+    .status(200)
+    .clearCookie("adminToken", options)
+    .json(new ApiResponse(200, {}, "Admin logged out SuccessFully"));
+});
+const logoutPatient = asyncHandler(async (req, res) => {
+  const options = {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now()),
+  };
+  return res
+    .status(200)
+    .clearCookie("patientToken", options)
+    .json(new ApiResponse(200, {}, "Patient logged out SuccessFully"));
+});
+
+export {
+  patientRegister,
+  login,
+  addNewAdmin,
+  getAllDoctors,
+  getCurrentUser,
+  logoutAdmin,
+  logoutPatient,
+};
