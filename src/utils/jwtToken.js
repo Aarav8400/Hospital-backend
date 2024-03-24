@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-const generateAccessToken = async (userId) => {
+const generateJwtToken = async (userId) => {
   try {
     const user = await User.findById(userId);
     const accessToken = user.GenerateAcessToken();
@@ -11,4 +11,4 @@ const generateAccessToken = async (userId) => {
     );
   }
 };
-export { generateAccessToken };
+export { generateJwtToken };

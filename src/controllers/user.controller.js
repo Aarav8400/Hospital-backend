@@ -2,7 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
-import { generateAccessToken } from "../utils/jwtToken.js";
+import { generateJwtToken } from "../utils/jwtToken.js";
 
 const patientRegister = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, phone, password, gender, dob, role } =
@@ -53,7 +53,7 @@ const login = asyncHandler(async (req, res) => {
   if (role !== user.role) {
     throw new ApiError(404, "User with this role not found ");
   }
-  const accessToken = await generateAccessToken(user._id);
+  const accessToken = await generateJwtToken(user._id);
   const cookieName = user.role === "Admin" ? "adminToken" : "patientToken";
   const loggedInUser = await User.findById(user._id).select("-password ");
   const options = {
@@ -75,4 +75,45 @@ const login = asyncHandler(async (req, res) => {
     );
 });
 
-export { patientRegister, login };
+const addNewAdmin = asyncHandler(async (req, res) => {
+  const { firstName, lastName, email, phone, password, gender, dob } = req.body;
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phone ||
+    !password ||
+    !gender ||
+    !dob
+  ) {
+    throw new ApiError(400, "All fileds are required");
+  }
+  const existedUser = await User.findOne({ email });
+  if (existedUser) {
+    throw new ApiError(
+      400,
+      `${existedUser.role} with this email already existed`
+    );
+  }
+  const user = await User.create({
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    dob,
+    role: "Admin",
+  });
+  const createdUser = await User.findById(user._id).select("-password ");
+  if (!createdUser) {
+    throw new ApiError(409, "Something went wrong while registering the user");
+  }
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(200, createdUser, "New Admin registerd Successfully")
+    );
+});
+
+export { patientRegister, login, addNewAdmin };

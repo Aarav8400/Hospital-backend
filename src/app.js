@@ -31,4 +31,5 @@ import userRouter from "./routes/user.routes.js";
 app.use("/api/v1/message", messageRouter);
 
 app.use("/api/v1/user", userRouter);
+
 export default app;
