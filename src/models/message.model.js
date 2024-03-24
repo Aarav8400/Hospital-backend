@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import validator from "validator";
-import Validator from "validator";
 const messageSchema = new Schema(
   {
     firstName: {
@@ -21,13 +20,13 @@ const messageSchema = new Schema(
     phone: {
       type: String,
       required: true,
-      minLength: [11, "monile number must containe 11 digit"],
-      maxLength: [11, "monile number must containe 11 digit"],
+      minLength: [11, "mobile number must containe 11 digit"],
+      maxLength: [11, "mobiile number must containe 11 digit"],
     },
     message: {
       type: String,
       required: true,
-      minLength: [10, "messaeg number contain atleast 10 character"],
+      minLength: [10, "message number contain atleast 10 character"],
     },
   },
   { timestamps: true }
