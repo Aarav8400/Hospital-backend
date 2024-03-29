@@ -22,6 +22,7 @@ import messageRouter from "./routes/message.routes.js";
 import userRouter from "./routes/user.routes.js";
 
 import appointmentRouter from "./routes/appointment.routes.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 //router declartion
 app.use("/api/v1/message", messageRouter);
@@ -30,4 +31,5 @@ app.use("/api/v1/user", userRouter);
 
 app.use("/api/v1/appointment", appointmentRouter);
 
+app.use(errorMiddleware);
 export default app;

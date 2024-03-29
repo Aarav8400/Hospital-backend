@@ -119,9 +119,10 @@ const addNewAdmin = asyncHandler(async (req, res) => {
 
 const getAllDoctors = asyncHandler(async (req, res) => {
   const doctors = await User.find({ role: "Doctor" });
-  return res
-    .status(201)
-    .json(new ApiResponse(200, doctors, "All doctors fetched successfully"));
+  return res.status(200).json({
+    success: true,
+    doctors,
+  });
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
