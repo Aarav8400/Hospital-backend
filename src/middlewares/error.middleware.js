@@ -22,7 +22,7 @@ export const errorMiddleware = (err, req, res, next) => {
   }
 
   const errorMessage =
-    err.errors.length !== 0
+    err.errors?.length !== 0
       ? Object.values(err.errors).map((error) => error.message)
       : [err.message];
 
