@@ -21,10 +21,15 @@ export const errorMiddleware = (err, req, res, next) => {
       err = new ApiError(400, message);
   }
 
-  const errorMessage =
-    err.errors?.length !== 0
-      ? Object.values(err.errors).map((error) => error.message)
-      : [err.message];
+  let errorMessage;
+
+  if (err.errors && err.errors.length !== 0) {
+    // If specific errors exist
+    errorMessage = Object.values(err.errors).map((error) => error.message);
+  } else {
+    // If there are no specific errors
+    errorMessage = [err.message];
+  }
 
   return res.status(err.statusCode).json({
     success: false,
