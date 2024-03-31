@@ -8,10 +8,10 @@ const generateJwtToken = async (userId) => {
     return accessToken;
   } catch (error) {
     console.log(error);
-    // throw new ApiError(
-    //   500,
-    //   "something went wrong while generating access token"
-    // );
+    throw new ApiError(
+      500,
+      "something went wrong while generating access token"
+    );
   }
 };
 export { generateJwtToken };
