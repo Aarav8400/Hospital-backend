@@ -11,9 +11,8 @@ app.use(
       "https://dashboard-ecru-three.vercel.app",
       "https://hospital-frontend-two.vercel.app",
     ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
-    optionsSuccessStatus: 204,
   })
 );
 
