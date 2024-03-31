@@ -63,6 +63,8 @@ const login = asyncHandler(async (req, res) => {
   const options = {
     maxAge: 604800000,
     sameSite: "none",
+    secure: false,
+    // httpOnly: true
   };
   return res
     .status(200)
