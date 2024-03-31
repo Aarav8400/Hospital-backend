@@ -7,10 +7,11 @@ const generateJwtToken = async (userId) => {
     const accessToken = user.GenerateAcessToken();
     return accessToken;
   } catch (error) {
-    throw new ApiError(
-      500,
-      "something went wrong while generating access token"
-    );
+    console.log(error);
+    // throw new ApiError(
+    //   500,
+    //   "something went wrong while generating access token"
+    // );
   }
 };
 export { generateJwtToken };
