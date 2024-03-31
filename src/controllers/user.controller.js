@@ -62,7 +62,7 @@ const login = asyncHandler(async (req, res) => {
   console.log(loggedInUser);
   const options = {
     maxAge: 604800000,
-    sameSite: none,
+    sameSite: "none",
   };
   return res
     .status(200)
