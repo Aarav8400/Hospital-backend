@@ -9,7 +9,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://dashboard-ecru-three.vercel.app",
-      "https://hospital-frontend-two.vercel.app",
+      "https://hospital-frontend-zeta.vercel.app",
     ],
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
