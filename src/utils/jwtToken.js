@@ -1,4 +1,6 @@
 import { User } from "../models/user.model.js";
+import { ApiError } from "./ApiError.js";
+
 const generateJwtToken = async (userId) => {
   try {
     const user = await User.findById(userId);
