@@ -55,8 +55,11 @@ const login = asyncHandler(async (req, res) => {
     throw new ApiError(404, "User with this role not found ");
   }
   const accessToken = await generateJwtToken(user._id);
+  console.log(accessToken);
   const cookieName = user.role === "Admin" ? "adminToken" : "patientToken";
+  console.log(cookieName);
   const loggedInUser = await User.findById(user._id).select("-password ");
+  console.log(loggedInUser);
   const options = {
     httpOnly: true,
     secure: true,

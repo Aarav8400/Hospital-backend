@@ -2,6 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 
 export const errorMiddleware = (err, req, res, next) => {
   err.message = err.message || "Internal Server Error";
+  console.log(err.message);
   err.statusCode = err.statusCode || 500;
 
   if (err.code === 11000) {
