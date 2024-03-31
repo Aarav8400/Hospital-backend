@@ -4,7 +4,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import { generateJwtToken } from "../utils/jwtToken.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-
 const patientRegister = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, phone, password, gender, dob, role } =
     req.body;
