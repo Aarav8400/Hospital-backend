@@ -1,9 +1,9 @@
 import { User } from "../models/user.model.js";
 import { ApiError } from "./ApiError.js";
 
-const generateJwtToken = (userId) => {
+const generateJwtToken = async (userId) => {
   try {
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     const accessToken = user.GenerateAcessToken();
     return accessToken;
   } catch (error) {
