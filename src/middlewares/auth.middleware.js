@@ -31,7 +31,7 @@ export const isPatientAuthenticated = asyncHandler(async (req, _, next) => {
   try {
     const token = req.cookies?.patientToken;
 
-    console.log(token);
+    // console.log(token);
     if (!token) {
       throw new ApiError(401, "patient Not Authenticated"); //unauthorized request
     }

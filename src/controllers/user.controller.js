@@ -63,7 +63,7 @@ const login = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
-    expires: new Date(Date.now() + 10000),
+    expires: new Date(Date.now() + 3600000),
   };
   return res
     .status(200)
