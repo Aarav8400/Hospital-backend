@@ -152,6 +152,7 @@ const logoutPatient = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     expires: new Date(Date.now()),
+    sameSite:"none"
   };
   return res
     .status(200)
